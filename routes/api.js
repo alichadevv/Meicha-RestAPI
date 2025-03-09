@@ -22,9 +22,9 @@ const BitlyClient = require('bitly').BitlyClient
 const { fetchJson, getBuffer } = require(__path + '/lib/myfunc')
 const isNumber = require('is-number');
 const router = express.Router()
-const ryzen = require("../lib/listdl")
+const meicha = require("../lib/listdl")
 var error = __path + '/view/error.html'
-let creator = 'Shirokami Ryzen'
+let creator = 'Alicha Zahra'
 loghandler = {
 	error: {
 		status: false,
@@ -65,7 +65,7 @@ loghandler = {
 	})
 })**/
 // *** AI ***
-router.get('/ai/ryzenai', async (req, res, next) => {
+router.get('/ai/meichaai', async (req, res, next) => {
 	let text = req.query.text
 	if (!text) return res.json(loghandler.nottext)
 	openai(text, 'Date.now()')
@@ -121,7 +121,7 @@ router.get('/ai/openai', async (req, res, next) => {
 router.get('/dowloader/fbdown', async (req, res) => {
 	let url = req.query.url
 	if (!url) return res.json(loghandler.noturl)
-	ryzen.fbdown(url)
+	meicha.fbdown(url)
 		.then(async data => {
 			if (!data.Normal_video) return res.json(loghandler.error)
 			res.json({
@@ -137,7 +137,7 @@ router.get('/dowloader/fbdown', async (req, res) => {
 router.get('/dowloader/twitter', async (req, res) => {
 	let url = req.query.url
 	if (!url) return res.json(loghandler.noturl)
-	ryzen.twitter(url)
+	meicha.twitter(url)
 		.then(async data => {
 			if (!data.video) return res.json(loghandler.error)
 			res.json({
@@ -153,7 +153,7 @@ router.get('/dowloader/twitter', async (req, res) => {
 router.get('/dowloader/tikok', async (req, res) => {
 	let url = req.query.url
 	if (!url) return res.json(loghandler.noturl)
-	ryzen.musically(url)
+	meicha.musically(url)
 		.then(async data => {
 			if (!data) return res.json(loghandler.error)
 			res.json({
@@ -171,7 +171,7 @@ router.get('/dowloader/igstorydowloader', async (req, res, next) => {
 	var username = req.query.username
 	if (!url) return res.json({ status: false, code: 503, creator: `${creator}`, message: "[!] enter username parameter!" })
 
-	ryzen.igstory(username).then(async (data) => {
+	meicha.igstory(username).then(async (data) => {
 		if (!data) return res.json(loghandler.instgram)
 		res.json({
 			status: true,
@@ -186,7 +186,7 @@ router.get('/dowloader/igdowloader', async (req, res, next) => {
 	if (!url) return res.json({ status: false, code: 503, creator: `${creator}`, message: "[!] enter url parameter!" })
 	if (!/^((https|http)?:\/\/(?:www\.)?instagram\.com\/(p|tv|reel|stories)\/([^/?#&]+)).*/i.test(url)) return res.json(loghandler.noturl)
 
-	ryzen.igdl(url).then(async (data) => {
+	meicha.igdl(url).then(async (data) => {
 		if (!data) return res.json(loghandler.instgram)
 		res.json({
 			status: true,
@@ -232,7 +232,7 @@ router.get('/dowloader/soundcloud', async (req, res, next) => {
 	var url = req.query.url
 	if (!url) return res.json({ status: false, code: 503, creator: `${creator}`, message: "[!] enter url parameter!" })
 
-	ryzen.soundcloud(url).then(data => {
+	meicha.soundcloud(url).then(data => {
 		if (!data.download) return res.json(loghandler.noturl)
 		res.json({
 			status: true,
@@ -298,7 +298,7 @@ router.get('/downloader/mediafire', async (req, res, next) => {
 	var url = req.query.url
 	if (!url) return res.json({ status: false, creator: `${creator}`, message: "[!] enter url parameter!" })
 
-	ryzen.mediafiredl(url).then(async (data) => {
+	meicha.mediafiredl(url).then(async (data) => {
 		if (!data) return res.json(loghandler.noturl)
 		res.json({
 			status: true,
@@ -313,7 +313,7 @@ router.get('/downloader/sfilemobi', async (req, res, next) => {
 	var url = req.query.url
 	if (!url) return res.json({ status: false, creator: `${creator}`, message: "[!] enter url parameter!" })
 
-	ryzen.sfilemobi(url).then(async (data) => {
+	meicha.sfilemobi(url).then(async (data) => {
 		if (!data) return res.json(loghandler.noturl)
 		res.json({
 			status: true,
@@ -329,7 +329,7 @@ router.get('/downloader/telesticker', async (req, res, next) => {
 	if (!url) return res.json({ status: false, creator: `${creator}`, message: "[!] enter url parameter!" })
 	if (!url.match(/(https:\/\/t.me\/addstickers\/)/gi)) return res.json(loghandler.noturl)
 
-	ryzen.telesticker(url).then(data => {
+	meicha.telesticker(url).then(data => {
 		res.json({
 			status: true,
 			creator: `${creator}`,
@@ -344,7 +344,7 @@ router.get('/downloader/telesticker', async (req, res, next) => {
 router.get('/textpro/pencil', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.textpro("https://textpro.me/create-a-sketch-text-effect-online-1044.html", [text1])
+	meicha.textpro("https://textpro.me/create-a-sketch-text-effect-online-1044.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -356,7 +356,7 @@ router.get('/textpro/pencil', async (req, res, next) => {
 router.get('/textpro/glitch', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.textpro("https://textpro.me/create-impressive-glitch-text-effects-online-1027.html", [text1])
+	meicha.textpro("https://textpro.me/create-impressive-glitch-text-effects-online-1027.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -368,7 +368,7 @@ router.get('/textpro/glitch', async (req, res, next) => {
 router.get('/textpro/blackpink', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html", [text1])
+	meicha.textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -382,7 +382,7 @@ router.get('/textpro/blackpink', async (req, res, next) => {
 router.get('/textpro/berry', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.textpro("https://textpro.me/create-berry-text-effect-online-free-1033.html", [text1])
+	meicha.textpro("https://textpro.me/create-berry-text-effect-online-free-1033.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -396,7 +396,7 @@ router.get('/textpro/berry', async (req, res, next) => {
 router.get('/textpro/neon', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.textpro("https://textpro.me/neon-light-text-effect-online-882.html", [text1])
+	meicha.textpro("https://textpro.me/neon-light-text-effect-online-882.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -411,7 +411,7 @@ router.get('/textpro/neon', async (req, res, next) => {
 router.get('/textpro/logobear', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.textpro("https://textpro.me/online-black-and-white-bear-mascot-logo-creation-1012.html", [text1])
+	meicha.textpro("https://textpro.me/online-black-and-white-bear-mascot-logo-creation-1012.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -425,7 +425,7 @@ router.get('/textpro/logobear', async (req, res, next) => {
 router.get('/textpro/3dchristmas', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.textpro("https://textpro.me/3d-christmas-text-effect-by-name-1055.html", [text1])
+	meicha.textpro("https://textpro.me/3d-christmas-text-effect-by-name-1055.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -439,7 +439,7 @@ router.get('/textpro/3dchristmas', async (req, res, next) => {
 router.get('/textpro/thunder', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.textpro("https://textpro.me/online-thunder-text-effect-generator-1031.html", [text1])
+	meicha.textpro("https://textpro.me/online-thunder-text-effect-generator-1031.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -453,7 +453,7 @@ router.get('/textpro/thunder', async (req, res, next) => {
 router.get('/textpro/3dboxtext', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.textpro("https://textpro.me/3d-box-text-effect-online-880.html", [text1])
+	meicha.textpro("https://textpro.me/3d-box-text-effect-online-880.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -469,7 +469,7 @@ router.get('/textpro/glitch2', async (req, res, next) => {
 	var text2 = req.query.text2
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
 	if (!text2) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text2 parameter!" })
-	ryzen.textpro("https://textpro.me/create-a-glitch-text-effect-online-free-1026.html", [text1, text2])
+	meicha.textpro("https://textpro.me/create-a-glitch-text-effect-online-free-1026.html", [text1, text2])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -484,7 +484,7 @@ router.get('/textpro/glitchtiktok', async (req, res, next) => {
 	var text2 = req.query.text2
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
 	if (!text2) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text2 parameter!" })
-	ryzen.textpro("https://textpro.me/create-glitch-text-effect-style-tik-tok-983.html", [text1, text2])
+	meicha.textpro("https://textpro.me/create-glitch-text-effect-style-tik-tok-983.html", [text1, text2])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -499,7 +499,7 @@ router.get('/textpro/video-game-classic', async (req, res, next) => {
 	var text2 = req.query.text2
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
 	if (!text2) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text2 parameter!" })
-	ryzen.textpro("https://textpro.me/video-game-classic-8-bit-text-effect-1037.html", [text1, text2])
+	meicha.textpro("https://textpro.me/video-game-classic-8-bit-text-effect-1037.html", [text1, text2])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -514,7 +514,7 @@ router.get('/textpro/marvel-studios', async (req, res, next) => {
 	var text2 = req.query.text2
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
 	if (!text2) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text2 parameter!" })
-	ryzen.textpro("https://textpro.me/create-logo-style-marvel-studios-online-971.html", [text1, text2])
+	meicha.textpro("https://textpro.me/create-logo-style-marvel-studios-online-971.html", [text1, text2])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -527,7 +527,7 @@ router.get('/textpro/marvel-studios', async (req, res, next) => {
 router.get('/photooxy/flaming', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/realistic-flaming-text-effect-online-197.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/realistic-flaming-text-effect-online-197.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -541,7 +541,7 @@ router.get('/photooxy/flaming', async (req, res, next) => {
 router.get('/photooxy/shadow-sky', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/shadow-text-effect-in-the-sky-394.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/shadow-text-effect-in-the-sky-394.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -553,7 +553,7 @@ router.get('/photooxy/shadow-sky', async (req, res, next) => {
 router.get('/photooxy/metallic', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/other-design/create-metallic-text-glow-online-188.html", [text1])
+	meicha.photooxy("https://photooxy.com/other-design/create-metallic-text-glow-online-188.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -567,7 +567,7 @@ router.get('/photooxy/metallic', async (req, res, next) => {
 router.get('/photooxy/naruto', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/manga-and-anime/make-naruto-banner-online-free-378.html", [text1])
+	meicha.photooxy("https://photooxy.com/manga-and-anime/make-naruto-banner-online-free-378.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -583,7 +583,7 @@ router.get('/photooxy/pubg', async (req, res, next) => {
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
 	var text2 = req.query.text2
 	if (!text2) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text2 parameter!" })
-	ryzen.photooxy("https://photooxy.com/battlegrounds/make-wallpaper-battlegrounds-logo-text-146.html", [text1, text2])
+	meicha.photooxy("https://photooxy.com/battlegrounds/make-wallpaper-battlegrounds-logo-text-146.html", [text1, text2])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -596,7 +596,7 @@ router.get('/photooxy/pubg', async (req, res, next) => {
 router.get('/photooxy/under-grass', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/make-quotes-under-grass-376.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/make-quotes-under-grass-376.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -609,7 +609,7 @@ router.get('/photooxy/under-grass', async (req, res, next) => {
 router.get('/photooxy/harry-potter', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/create-harry-potter-text-on-horror-background-178.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/create-harry-potter-text-on-horror-background-178.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -622,7 +622,7 @@ router.get('/photooxy/harry-potter', async (req, res, next) => {
 router.get('/photooxy/flower-typography', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/art-effects/flower-typography-text-effect-164.html", [text1])
+	meicha.photooxy("https://photooxy.com/art-effects/flower-typography-text-effect-164.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -635,7 +635,7 @@ router.get('/photooxy/flower-typography', async (req, res, next) => {
 router.get('/photooxy/picture-of-love', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/create-a-picture-of-love-message-377.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/create-a-picture-of-love-message-377.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -648,7 +648,7 @@ router.get('/photooxy/picture-of-love', async (req, res, next) => {
 router.get('/photooxy/coffee-cup', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/put-any-text-in-to-coffee-cup-371.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/put-any-text-in-to-coffee-cup-371.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -661,7 +661,7 @@ router.get('/photooxy/coffee-cup', async (req, res, next) => {
 router.get('/photooxy/butterfly', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/butterfly-text-with-reflection-effect-183.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/butterfly-text-with-reflection-effect-183.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -674,7 +674,7 @@ router.get('/photooxy/butterfly', async (req, res, next) => {
 router.get('/photooxy/night-sky', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/write-stars-text-on-the-night-sky-200.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/write-stars-text-on-the-night-sky-200.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -688,7 +688,7 @@ router.get('/photooxy/night-sky', async (req, res, next) => {
 router.get('/photooxy/carved-wood', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/carved-wood-effect-online-171.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/carved-wood-effect-online-171.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -702,7 +702,7 @@ router.get('/photooxy/carved-wood', async (req, res, next) => {
 router.get('/photooxy/illuminated-metallic', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/illuminated-metallic-effect-177.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/illuminated-metallic-effect-177.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -715,7 +715,7 @@ router.get('/photooxy/illuminated-metallic', async (req, res, next) => {
 router.get('/photooxy/sweet-candy', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] enter text parameter!" })
-	ryzen.photooxy("https://photooxy.com/logo-and-text-effects/sweet-andy-text-online-168.html", [text1])
+	meicha.photooxy("https://photooxy.com/logo-and-text-effects/sweet-andy-text-online-168.html", [text1])
 		.then((data) => {
 			res.set({ 'Content-Type': 'image/png' })
 			res.send(data)
@@ -746,7 +746,7 @@ router.get('/soundoftext', async (req, res, next) => {
 router.get('/search/linkgroupwa', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] masukan parameter text" })
-	ryzen.linkwa(text1).then((data) => {
+	meicha.linkwa(text1).then((data) => {
 		if (!data[0]) return res.json(loghandler.notfound)
 		res.json({
 			status: true,
@@ -867,7 +867,7 @@ router.get('/search/phsearch', async (req, res, next) => {
 router.get('/search/pinterest', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] masukan parameter text" })
-	ryzen.pinterest(text1).then((data) => {
+	meicha.pinterest(text1).then((data) => {
 		if (!data[0]) return res.json(loghandler.notfound)
 		res.json({
 			status: true,
@@ -883,7 +883,7 @@ router.get('/search/pinterest', async (req, res, next) => {
 router.get('/search/ringtone', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] masukan parameter text" })
-	ryzen.ringtone(text1).then((data) => {
+	meicha.ringtone(text1).then((data) => {
 		if (!data) return res.json(loghandler.notfound)
 		res.json({
 			status: true,
@@ -899,7 +899,7 @@ router.get('/search/ringtone', async (req, res, next) => {
 router.get('/search/wikimedia', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] masukan parameter text" })
-	ryzen.wikimedia(text1).then((data) => {
+	meicha.wikimedia(text1).then((data) => {
 		if (!data[0]) return res.json(loghandler.notfound)
 		res.json({
 			status: true,
@@ -915,7 +915,7 @@ router.get('/search/wikimedia', async (req, res, next) => {
 router.get('/search/wallpaper2', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] masukan parameter text" })
-	ryzen.wallpaper(text1).then((data) => {
+	meicha.wallpaper(text1).then((data) => {
 		if (!data[0]) return res.json(loghandler.notfound)
 		res.json({
 			status: true,
@@ -983,7 +983,7 @@ router.get('/search/ytplay', async (req, res, next) => {
 router.get('/search/sticker', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] masukan parameter text" })
-	ryzen.stickersearch(text1).then(data => {
+	meicha.stickersearch(text1).then(data => {
 		if (!data) return res.json(loghandler.notfound)
 		res.json({
 			status: true,
@@ -998,7 +998,7 @@ router.get('/search/sticker', async (req, res, next) => {
 router.get('/search/sfilemobi', async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1) return res.json({ status: false, creator: `${creator}`, message: "[!] masukan parameter text" })
-	ryzen.sfilemobiSearch(text1).then(data => {
+	meicha.sfilemobiSearch(text1).then(data => {
 		if (!data) return res.json(loghandler.notfound)
 		res.json({
 			status: true,
@@ -1410,7 +1410,7 @@ router.get('/tools/ssweb', async (req, res) => {
 	if (!text) return res.json(loghandler.noturl)
 	let islink = isUrl(text)
 	if (!islink) return res.json({ message: "use https://" })
-	ryzen.ssweb(text)
+	meicha.ssweb(text)
 		.then((data) => {
 			if (!data) return res.json(loghandler.error)
 			res.set({ 'Content-Type': 'image/png' })
@@ -1423,7 +1423,7 @@ router.get('/tools/textstyle', async (req, res) => {
 	let text = req.query.text
 	if (!text) return res.json(loghandler.nottext)
 	let text1 = shortText(text, 10000)
-	ryzen.styletext(text1)
+	meicha.styletext(text1)
 		.then((data) => {
 			if (!data) return res.json(loghandler.error)
 			res.json({
